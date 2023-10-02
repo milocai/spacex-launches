@@ -1,0 +1,82 @@
+---
+import { type Doc } from "../../types/api";
+import { getLaunchById, getLatestLaunches } from "../../services/spacex";
+import Layout from "../../layouts/Layout.astro";
+
+const { id } = Astro.params;
+
+let launch: Doc | null = null;
+if (id) {
+  launch = await getLaunchById({ id });
+}
+
+const date = new Date(launch?.date_utc || "");
+
+export async function getStaticPaths() {
+  const launches = await getLatestLaunches();
+  return launches.map((launch) => ({ params: { id: launch.id } }));
+}
+---
+
+<Layout title={`Launch ${launch?.flight_number} - ${launch?.name}`}>
+  <article>
+    <div class="flex">
+      <img
+        class="w-24 h-24 self-center sm:w-1/4 sm:h-auto"
+        src={launch?.links.patch.small}
+        alt={launch?.name}
+      />
+      <section class="ml-8 h-auto">
+        <header>
+          <h2 class="text-2xl font-bold">
+            Launch #{launch?.flight_number} - {launch?.name}
+          </h2>
+          <p class="text-gray-400 italic text-xs">
+            {date.toDateString()} at {date.toLocaleTimeString()}
+          </p>
+        </header>
+        <p class="text-gray-400 mt-4 mb-4">{launch?.details}</p>
+        <footer class="inline-flex space-x-4">
+          <a href={launch?.links.webcast}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path
+                d="M18 3a5 5 0 0 1 5 5v8a5 5 0 0 1 -5 5h-12a5 5 0 0 1 -5 -5v-8a5 5 0 0 1 5 -5zm-9 6v6a1 1 0 0 0 1.514 .857l5 -3a1 1 0 0 0 0 -1.714l-5 -3a1 1 0 0 0 -1.514 .857z"
+                stroke-width="0"
+                fill="currentColor"></path>
+            </svg>
+          </a>
+          <a href={launch?.links.wikipedia}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M3 4.984h2"></path>
+              <path d="M8 4.984h2.5"></path>
+              <path d="M14.5 4.984h2.5"></path>
+              <path d="M22 4.984h-2"></path>
+              <path d="M4 4.984l5.455 14.516l6.545 -14.516"></path>
+              <path d="M9 4.984l6 14.516l6 -14.516"></path>
+            </svg>
+          </a>
+        </footer>
+      </section>
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,100 @@
+---
+import { getCompanyInfo } from "../services/spacex";
+const company = await getCompanyInfo();
+---
+
+<article class="h-full">
+  <header>
+    <h1 class="text-center text-3xl font-bold">{company.name}</h1>
+  </header>
+
+  <p class="mt-4 mb-4 text-gray-400 text-center tracking-tight">
+    {company.summary}
+  </p>
+  <div
+    class="text-gray-500 flex justify-center space-x-3 text-xs tracking-normal mt-4 mb-4"
+  >
+    <a href={company.links.website}>
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M19.5 7a9 9 0 0 0 -7.5 -4a8.991 8.991 0 0 0 -7.484 4"></path>
+        <path d="M11.5 3a16.989 16.989 0 0 0 -1.826 4"></path>
+        <path d="M12.5 3a16.989 16.989 0 0 1 1.828 4"></path>
+        <path d="M19.5 17a9 9 0 0 1 -7.5 4a8.991 8.991 0 0 1 -7.484 -4"></path>
+        <path d="M11.5 21a16.989 16.989 0 0 1 -1.826 -4"></path>
+        <path d="M12.5 21a16.989 16.989 0 0 0 1.828 -4"></path>
+        <path d="M2 10l1 4l1.5 -4l1.5 4l1 -4"></path>
+        <path d="M17 10l1 4l1.5 -4l1.5 4l1 -4"></path>
+        <path d="M9.5 10l1 4l1.5 -4l1.5 4l1 -4"></path>
+      </svg>
+    </a>
+
+    <a href={company.links.twitter}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-brand-x"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+      </svg>
+    </a>
+
+    <a href={company.links.flickr}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-brand-flickr"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M7 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+        <path d="M17 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+      </svg>
+    </a>
+  </div>
+
+  <footer
+    class="bottom-0 text-gray-500 sm:flex justify-center sm:space-x-3 text-xs grid tracking-normal"
+  >
+    <p>Founded at {company.founded}</p>
+    <p>Founder: {company.founder}</p>
+    <p>Employees: {company.employees}</p>
+    <p>CEO: {company.ceo}</p>
+    <p>CTO: {company.cto}</p>
+    <p>COO: {company.coo}</p>
+    <p>CTO Propulsion: {company.cto_propulsion}</p>
+  </footer>
+  <div
+    class="text-gray-500 sm:flex justify-center text-xs grid tracking-normal mt-4 mb-4"
+  >
+    <p>
+      {company.headquarters.address}, {company.headquarters.city}, {
+        company.headquarters.state
+      }
+    </p>
+  </div>
+</article>
